@@ -1,0 +1,55 @@
+﻿<Window x:Class="WpfAppN1.ResultOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppN1"
+        mc:Ignorable="d"
+        Title="MazeRunner Result Overview" Height="400" Width="600"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+        <ToolBar VerticalAlignment="Top" Grid.Row="0">
+
+            <Button x:Name="buttonExport" ToolTip="Export to .csv" Click="buttonExport_Click" >
+                <Image Source="/Icons/ExportToExcel_16x.png"  />
+            </Button>
+
+        </ToolBar>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+
+            <ListView Background="Bisque" Name="lvResultOverview" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            
+                            <TextBlock Text="Algorithm: " />
+                            <TextBlock Text="{Binding Algorithm}" FontWeight="Bold" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="Time: " />
+                            <TextBlock Text="{Binding ElapsedMilliseconds}" />
+                            <TextBlock Text=" (ms), " />
+                            <TextBlock Text=" Solution steps: " />
+                            <TextBlock Text="{Binding NodesInSolution}"  />
+                            <TextBlock Text=", " />
+                            <TextBlock Text=" Visited nodes: " />
+                            <TextBlock Text="{Binding NodesVisited}" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="Cost: " />
+                            <TextBlock Text="{Binding Cost}" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </ScrollViewer>
+
+    </Grid>
+</Window>

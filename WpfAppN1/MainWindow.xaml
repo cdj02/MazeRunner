@@ -1,0 +1,94 @@
+﻿<Window x:Class="WpfAppN1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppN1"
+        xmlns:localex="clr-namespace:WpfAppN1.Extensions"
+        xmlns:localvm="clr-namespace:WpfAppN1.ViewModel"
+        mc:Ignorable="d"        
+        Title="Maze Runner" Height="600" Width="800">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ToolBar VerticalAlignment="Top" Grid.Row="0">
+
+            <Button x:Name="buttonNew" ToolTip="Create a new maze" Click="buttonNew_Click" >
+                <Image Source="/Icons/NewFile_16x.png"  />
+            </Button>
+
+            <Separator/>
+
+            <Button x:Name="buttonOpen" ToolTip="Open" Click="ButtonOpen_Click"  >
+                <Image Source="/Icons/OpenFolder_16x.png"  />
+            </Button>
+            <Button x:Name="buttonSave" ToolTip="Save" Click="ButtonSave_Click"  >
+                <Image Source="/Icons/Save_16x.png"  />
+            </Button>
+
+            <Separator/>
+
+            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150"
+                      ItemsSource="{Binding Source={localex:EnumBindingSource {x:Type localvm:AlgorithmEnum}}}"
+                      SelectedItem="{Binding ViewOptions.Algorithm}" />
+
+            <Button x:Name="buttonCalculate" ToolTip="{Binding PathFindResultController.LastResultText}" Click="ButtonCalculate_Click"  >
+                <Image Source="/Icons/Calculator_16x.png"  />
+            </Button>
+
+            <Separator/>
+            <Button x:Name="buttonResultOverview" ToolTip="Algorithm result overview" Click="buttonResultOverview_Click"   >
+                <Image Source="/Icons/StatusInformation_16x.png"  />
+            </Button>
+
+
+        </ToolBar>
+
+        <ItemsControl Grid.Row="1" DataContext="{Binding MazeGraphViewModel}" ItemsSource="{Binding NodeList}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid x:Name="NodePanel" Background="Bisque" 
+                                Rows="{Binding Rows}"
+                                Columns="{Binding Columns}"
+                                Margin="1,1,1,1"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <Border x:Name="brd_left" BorderThickness="{Binding BorderLeft.Thickness}" BorderBrush="{Binding BorderLeft.Brush}" MouseLeftButtonUp="Border_MouseLeftButtonUp" >
+                        <Border x:Name="brd_top" BorderThickness="{Binding BorderTop.Thickness}" BorderBrush="{Binding BorderTop.Brush}" MouseLeftButtonUp="Border_MouseLeftButtonUp" >
+                            <Border x:Name="brd_right" BorderThickness="{Binding BorderRight.Thickness}" BorderBrush="{Binding BorderRight.Brush}" MouseLeftButtonUp="Border_MouseLeftButtonUp" >
+                                <Border x:Name="brd_down" BorderThickness="{Binding BorderBottom.Thickness}" BorderBrush="{Binding BorderBottom.Brush}" MouseLeftButtonUp="Border_MouseLeftButtonUp" >
+
+                                    <Grid>
+                                        <Grid.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header = "Set as start" Click="MenuItem_SetStartClick"/>
+                                                <MenuItem Header = "Set as finish" Click="MenuItem_SetEndClick"/>
+                                            </ContextMenu>
+                                        </Grid.ContextMenu>
+                                        <Rectangle Fill="{Binding Background}" />
+                                        <Label HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Content="{Binding Label}"/>
+                                    </Grid>
+
+                                </Border>
+                            </Border>
+                        </Border>
+                    </Border>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</Window>
