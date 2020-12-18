@@ -59,10 +59,10 @@ namespace PathfindAlgorithm.BFSAlgorithm
                 }
                 else
                 {
-                    for (int i = 0; i < possibleVisits.Count; i++)
+                    for (int j = 0; j < possibleVisits.Count; j++)
                     {
-                        traverseList.Add(new Traverse { ParentNodeId = node.Id, ChildNodeId = possibleVisits[i] });
-                        nodeVisit = graph.GetNodeById(possibleVisits[i]);
+                        traverseList.Add(new Traverse { ParentNodeId = node.Id, ChildNodeId = possibleVisits[j] });
+                        nodeVisit = graph.GetNodeById(possibleVisits[j]);
                         q.AddLast(nodeVisit);
                         visited.Add(nodeVisit.Id);
                     }
@@ -85,12 +85,33 @@ namespace PathfindAlgorithm.BFSAlgorithm
             result.Solution.Add(end);
             result.VisitedNodes = visited.Select(x => graph.GetNodeById(x)).ToList();
 
+            Node invalidNode = null;
+            Node reconstructNode = null;
+            var solutionIdList = new List<string>();
+            for (int i = 0; i < result.Solution.Count; i++)
+            {
+                invalidNode = result.Solution[i];
+                reconstructNode = graph.GetNodeById(invalidNode.Id);
+                solutionIdList.Add(reconstructNode.Id);
+            }
+
             Node prevNode = null;
+            Node connNode = null;
+            Node connTo = null;
+            string connId = null;
             foreach (var node in result.Solution)
             {
                 foreach (var connection in node.Connections)
                 {
-                    if (connection.NodeTo(node) != prevNode && result.Solution.Contains(connection.NodeTo(node)))
+                    connNode = connection.NodeTo(node);
+                    connId = connNode.Id;
+                    connTo = connection.NodeTo(node);
+                    if (prevNode == null)
+                    {
+                        prevNode = node;
+                        break;
+                    }
+                    if (connTo.Id != prevNode.Id && solutionIdList.Contains(connId))
                     {
                         prevNode = node;
                         result.PathWeight += connection.Weight;
@@ -98,6 +119,7 @@ namespace PathfindAlgorithm.BFSAlgorithm
                     }
                 }
             }
+            result.PathWeight++;
 
             return result;
 

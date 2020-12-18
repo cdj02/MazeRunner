@@ -58,7 +58,7 @@ namespace WpfAppN1.ViewModel
         public ViewOptions()
         {
             // defaults
-            ShowNodeId = true;
+            ShowNodeId = false;
 
             NodeNormalBackground = Brushes.BurlyWood;
             NodeVisitedBackground = Brushes.LightSkyBlue;

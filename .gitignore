@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/ConsoleAppN1/bin
+/ConsoleAppN1/obj
+/NodeModel/bin
+/NodeModel/obj
+/PathfindAlgorithm/bin
+/PathfindAlgorithm/obj
+/WpfAppN1/bin
+/WpfAppN1/obj
+/PathfindAlgorithm/.vs

@@ -74,7 +74,7 @@ namespace WpfAppN1
         private void ToggleConnection(Border border, Point positionClicked)
         {
             // margin for clicking at edge of border
-            int clickMargin = 10;
+            int clickMargin = 5;
 
             var height = border.ActualHeight;
             var with = border.ActualWidth;
